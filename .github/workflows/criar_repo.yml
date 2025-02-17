@@ -1,0 +1,73 @@
+name: Create Prefixed Repository from Template
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo_name:
+        description: "Nome do repositório sem o zoop"
+        required: true
+        type: string
+
+jobs:
+  create-repo:
+    runs-on: pagzoop
+    steps:
+      - name: Check and Install GitHub CLI if not present
+        run: |
+          if ! command -v gh &> /dev/null
+          then
+            echo "GitHub CLI not found. Installing..."
+            sudo yum install -y git
+            type -p curl >/dev/null || sudo yum install -y curl
+            sudo yum install -y jq
+            sudo yum install -y tar
+            gh_cli_version=$(curl -s https://api.github.com/repos/cli/cli/releases/latest | jq -r '.tag_name')
+            curl -L "https://github.com/cli/cli/releases/download/$gh_cli_version/gh_${gh_cli_version#v}_linux_amd64.tar.gz" -o gh_cli.tar.gz
+            tar -xzf gh_cli.tar.gz
+            sudo mv gh_${gh_cli_version#v}_linux_amd64/bin/gh /usr/local/bin/
+            rm -rf gh_${gh_cli_version#v}_linux_amd64 gh_cli.tar.gz
+          else
+            echo "GitHub CLI is already installed."
+          fi
+
+      - name: Set repository name with prefix
+        id: set-repo-name
+        run: |
+          echo "New repository name: zoop-${{ github.event.inputs.repo_name }}"
+          echo "full_repo_name=zoop-${{ github.event.inputs.repo_name }}" >> $GITHUB_ENV
+
+      - name: Authenticate GitHub CLI
+        run: |
+          echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
+
+      - name: Create new repository from template
+        run: |
+          gh repo create getzoop/${{ env.full_repo_name }} \
+            --template getzoop/zoop-template \
+            --private
+
+      - name: Confirm repository creation
+        run: |
+          echo "Repository created: https://github.com/getzoop/${{ env.full_repo_name }}"
+
+      - name: Wait for repository to be populated
+        run: sleep 10
+
+      - name: Get SHA for 'criar_repo.yml'
+        id: get-sha
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          response=$(gh api /repos/getzoop/${{ env.full_repo_name }}/contents/.github/workflows/criar_repo.yml)
+          echo "sha=$(echo "$response" | jq -r .sha)" >> $GITHUB_ENV
+
+      - name: Delete 'criar_repo.yml' from the new repository
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh api \
+            -X DELETE \
+            -H "Authorization: token $GH_TOKEN" \
+            -F message="Deleting criar_repo.yml after setup" \
+            -F sha="${{ env.sha }}" \
+            /repos/getzoop/${{ env.full_repo_name }}/contents/.github/workflows/criar_repo.yml
