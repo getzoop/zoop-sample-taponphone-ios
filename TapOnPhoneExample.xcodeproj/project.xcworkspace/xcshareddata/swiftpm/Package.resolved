@@ -1,0 +1,15 @@
+{
+  "originHash" : "ac9ad421f5b1cd8e2ecf7b7d5e542948dd0dd6fd629c8045ae0aeff840bbd165",
+  "pins" : [
+    {
+      "identity" : "zoop-package-public",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getzoop/zoop-package-public",
+      "state" : {
+        "branch" : "TapOnPhoneSDK-iOS/1.1.0",
+        "revision" : "e6f88669f2bcbeeb758fbb3c14cf370dc609f70a"
+      }
+    }
+  ],
+  "version" : 3
+}
