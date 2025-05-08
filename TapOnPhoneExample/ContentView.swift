@@ -20,8 +20,8 @@ struct ContentView: View {
     @State private var metadata: String = ""
     
     @State private var isLoadingPayment = false
-    @State private var paySuccess: TapOnPhoneTransactionSuccess?
-    @State private var payError: TapOnPhoneTransactionError?
+    @State private var paySuccess: PaymentApprovedResponse?
+    @State private var payError: PaymentErrorResponse?
     
     var body: some View {
         VStack {
@@ -72,7 +72,7 @@ struct ContentView: View {
                 /// After the SDK has been initialized with success, you can capture the payment values like amount, installments,
                 /// payment type and send to the TapOnPhone.pay() to do a payment.
                 TapOnPhone.pay(
-                    payRequest: TapOnPhonePaymentRequest(
+                    payRequest: PaymentRequest(
                         amount: Decimal(Double(amount) / 100.0),
                         paymentType: paymentType,
                         installments: installments,
@@ -96,24 +96,6 @@ struct ContentView: View {
             payStatus
             
             Spacer()
-            
-            Button {
-                /// After using the SDK, it is good to deinitialize it to clean the memory use and background tasks.
-                /// For this, you just need to call the method TapOnPhone.terminate()
-                TapOnPhone.terminate()
-                isInitialized = false
-                initializeError = nil
-                amount = 1
-                paymentType = .credit
-                installments = 1
-                metadata = ""
-                paySuccess = nil
-                payError = nil
-            } label: {
-                Text("3. Terminate")
-                    .bold()
-            }
-            .disabled(!isInitialized)
         }
         .padding()
     }

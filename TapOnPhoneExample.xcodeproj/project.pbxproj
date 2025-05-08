@@ -360,7 +360,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getzoop/zoop-package-public";
 			requirement = {
-				branch = "TapOnPhoneSDK-iOS/1.1.0";
+				branch = "release-zoop-sdk-taponphone-ios-1.1.1";
 				kind = branch;
 			};
 		};
