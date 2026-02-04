@@ -265,6 +265,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TapOnPhoneExample/Preview Content\"";
+				DEVELOPMENT_TEAM = KJ67298GT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -303,6 +304,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TapOnPhoneExample/Preview Content\"";
+				DEVELOPMENT_TEAM = KJ67298GT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -360,7 +362,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getzoop/zoop-package-public";
 			requirement = {
-				branch = "release-zoop-sdk-taponphone-ios-3.4.3";
+				branch = "release-zoop-sdk-taponphone-ios-3.4.6";
 				kind = branch;
 			};
 		};
