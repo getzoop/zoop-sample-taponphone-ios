@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getzoop/zoop-package-public",
       "state" : {
-        "branch" : "release-zoop-sdk-taponphone-ios-3.4.3",
-        "revision" : "43d5ae54d40c054b51ee391cbe328cb0d1d81989"
+        "branch" : "release-zoop-sdk-taponphone-ios-3.4.6",
+        "revision" : "54f6f99fd0750aa525780ee4bb7c6e42af0c21cf"
       }
     }
   ],
